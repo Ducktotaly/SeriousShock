@@ -57,6 +57,7 @@ public class NPC : MonoBehaviour
     private void Update()
     {
         if (onChangeState) { return; }
+        if (onDeath) { return; }
         if (agent.remainingDistance < 0.1f)
         {
             onChangeState = true;

@@ -1148,13 +1148,28 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 159070119190844767, guid: 3a9f36a948f56644b80cdca746f6213a,
         type: 3}
+      propertyPath: runSpeed
+      value: 4.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 159070119190844767, guid: 3a9f36a948f56644b80cdca746f6213a,
+        type: 3}
       propertyPath: FlyCamera
       value: 
       objectReference: {fileID: 330585546}
+    - target: {fileID: 159070119190844767, guid: 3a9f36a948f56644b80cdca746f6213a,
+        type: 3}
+      propertyPath: defaultSpeed
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2357519567169276087, guid: 3a9f36a948f56644b80cdca746f6213a,
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 2399679352732631240, guid: 3a9f36a948f56644b80cdca746f6213a,
+        type: 3}
+      propertyPath: m_StepOffset
+      value: 0.001
       objectReference: {fileID: 0}
     - target: {fileID: 4559328634867386907, guid: 3a9f36a948f56644b80cdca746f6213a,
         type: 3}
