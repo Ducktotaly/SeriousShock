@@ -6,20 +6,11 @@ public class Player : MonoBehaviour
 {
     public Animator Animator;
     public CharacterController Controller;
-<<<<<<< Updated upstream
-    public float Speed;
-    public float CameraSpeed;
-    public Transform FlyCamera;
 
-    private Vector3 offset;
-=======
-    public float defaultSpeed;
-    public float runSpeed;
-    public CameraView CameraView;
     public float Speed;
+    public CameraView CameraView;
 
     private float defaultAnimSpeed = 1f;
->>>>>>> Stashed changes
 
     private void Awake()
     {

@@ -248,7 +248,7 @@ GameObject:
   - component: {fileID: 159070119190844767}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -334,8 +334,7 @@ MonoBehaviour:
   Animator: {fileID: 3683508552543103143}
   Controller: {fileID: 2399679352732631240}
   Speed: 3
-  CameraSpeed: 3
-  FlyCamera: {fileID: 0}
+  CameraView: {fileID: 0}
 --- !u!1 &2507228119853646443
 GameObject:
   m_ObjectHideFlags: 0
