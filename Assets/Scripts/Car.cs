@@ -9,8 +9,9 @@ public class Car : MonoBehaviour
     public CarCollider Spawn;
     public float Speed;
     public float brakeSpeed;
+    public float turnAngle;
+    
     private bool isActive;
-
     private float axisX;
     private float axisY;
 
@@ -36,6 +37,8 @@ public class Car : MonoBehaviour
         if (isActive == false) { return;}
         foreach (var wheel in Wheels)
         {
+            onSteerTurn(wheel.wheel, wheel.isFirst);
+
             if (axisY == 0)
             {
                 onBreak(wheel.wheel,brakeSpeed);
@@ -43,7 +46,7 @@ public class Car : MonoBehaviour
             else
             {
                 onBreak(wheel.wheel, 0);
-                OnMove(wheel.wheel, wheel.isFirst);
+                OnMove(wheel.wheel);
             }
 
             wheel.wheel.GetWorldPose(out var pos, out var rot);
@@ -70,12 +73,15 @@ public class Car : MonoBehaviour
         wheel.brakeTorque = speed;
     }
 
-    private void OnMove(WheelCollider wheel, bool isFirst)
+    private void onSteerTurn(WheelCollider wheel, bool isFirst)
     {
-        wheel.motorTorque = Speed * axisY;
         if (isFirst)
         {
-            wheel.steerAngle = 30f * axisX;
+            wheel.steerAngle = turnAngle * axisX;
         }
+    }
+    private void OnMove(WheelCollider wheel)
+    {
+        wheel.motorTorque = Speed * axisY;
     }
 }
