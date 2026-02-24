@@ -492,6 +492,7 @@ MonoBehaviour:
   Spawn: {fileID: 6184824196348526312}
   Speed: 600
   brakeSpeed: 1500
+  turnAngle: 30
 --- !u!1 &5637771861305318114
 GameObject:
   m_ObjectHideFlags: 0
