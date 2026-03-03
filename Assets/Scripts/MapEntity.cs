@@ -18,6 +18,11 @@ public class MapEntity : MonoBehaviour
         }
     }
 
+    public Transform GetActivePlayer()
+    {
+        return activeCar == null ? player.transform : activeCar.transform;
+    }
+
     private void TryChangeCar()
     {
         if (activeCar == null)

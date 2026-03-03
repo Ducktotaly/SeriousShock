@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CoreManager : MonoBehaviour
@@ -12,6 +13,8 @@ public class CoreManager : MonoBehaviour
     public static CoreManager Instance;
     public TextMeshProUGUI moneyText;
     public TextMeshProUGUI timeText;
+    public Transform arrow;
+    public MapEntity mapEntity;
 
     private MissionDate saveData;
 
@@ -46,6 +49,7 @@ public class CoreManager : MonoBehaviour
 
     private void Update()
     {
+        onMoveArrow();
         if (saveData.isActive == false) { return; }
         saveData.time -= Time.deltaTime;
         TimeSpan time = TimeSpan.FromSeconds(saveData.time);
@@ -57,6 +61,15 @@ public class CoreManager : MonoBehaviour
             timeText.text = "";
             startPoint.ActivePoint();
         }
+    }
+
+    private void onMoveArrow()
+    {
+        var player = mapEntity.GetActivePlayer();
+        var target = saveData.isActive ? saveData.point.transform : startPoint.transform;
+
+        var direction = target.position - player.position;
+        arrow.rotation = Quaternion.LookRotation(direction);
     }
 
     public struct MissionDate
