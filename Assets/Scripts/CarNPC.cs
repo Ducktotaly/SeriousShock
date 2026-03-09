@@ -4,27 +4,30 @@ using UnityEngine;
 
 public class CarNPC : MonoBehaviour
 {
-    public List<Transform> movePoints = new List<Transform>();
     public List<Car.WheelData> Wheels = new();
     public float Speed;
     public float turnAngle = 30f;
+    public Waypoint targetWaypoint;
 
     private float axisX;
     private float axisY;
-    private int indexPoint;
 
     private void Update()
     {
-        var direction = (movePoints[indexPoint].position - transform.position).normalized;
+        var direction = (targetWaypoint.transform.position - transform.position).normalized;
         axisX = transform.InverseTransformDirection(direction).x;
 
-        if (Vector3.Distance(transform.position, movePoints[indexPoint].position) < 3f)
+        if (Vector3.Distance(transform.position, targetWaypoint.transform.position) < 3f)
         {
-            indexPoint++;
-            if (indexPoint >= movePoints.Count)
+            if (targetWaypoint.NextWaypoints.Count < 2)
             {
-                indexPoint = 0;
+                targetWaypoint = targetWaypoint.NextWaypoints[0];
             }
+            else
+            {
+                targetWaypoint = targetWaypoint.NextWaypoints[Random.Range(0, targetWaypoint.NextWaypoints.Count)];
+            }
+
         }
     }
 
