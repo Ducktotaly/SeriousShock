@@ -1,3 +1,4 @@
+using DG.Tweening;
 using JetBrains.Annotations;
 using System;
 using System.Collections;
@@ -8,6 +9,10 @@ using UnityEngine;
 
 public class CoreManager : MonoBehaviour
 {
+    public GameObject mainCamera;
+    public CanvasGroup blackScreen;
+    public Transform shopPoint;
+    public ShopManager shopManager;
     public List<DeliverPoint> pointGive;
     public DeliverPoint startPoint;
     public static CoreManager Instance;
@@ -17,10 +22,31 @@ public class CoreManager : MonoBehaviour
     public MapEntity mapEntity;
 
     private MissionDate saveData;
+    private bool activeShop;
 
     private void Awake()
     {
         Instance = this;
+        UpdateMoney();
+    }
+
+    public void CloseShop()
+    {
+        DOTween.Sequence()
+                .AppendCallback(() => DOTween.To(x => blackScreen.alpha = x, 0, 1, 1f))
+                .AppendInterval(1f)
+                .AppendCallback(() =>
+                {
+                    mainCamera.SetActive(true);
+                    shopManager.gameObject.SetActive(false);
+                })
+                .AppendCallback(() => DOTween.To(x => blackScreen.alpha = x, 1, 0, 1f))
+                .AppendInterval(1f)
+                .AppendCallback(() => activeShop = false);
+    }
+  
+    public void UpdateMoney()
+    {
         moneyText.text = $"{PlayerPrefs.GetInt("Money")} $";
     }
 
@@ -47,8 +73,37 @@ public class CoreManager : MonoBehaviour
         moneyText.text = $"{currentMoney} $";
     }
 
+    private void TryOpenShop()
+    {
+        if (activeShop)
+        {
+            return;
+        }
+
+        if (Vector3.Distance(shopPoint.position, mapEntity.player.transform.position) > 3f)
+        {
+            return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            activeShop = true;
+            DOTween.Sequence()
+                .AppendCallback(() => DOTween.To(x => blackScreen.alpha = x, 0, 1, 1f))
+                .AppendInterval(1f)
+                .AppendCallback(() =>
+                {
+                    mainCamera.SetActive(false);
+                    shopManager.UpdateShop();
+                    shopManager.gameObject.SetActive(true);
+                })
+                .AppendCallback(() => DOTween.To(x => blackScreen.alpha = x, 1, 0, 1f));
+        }
+    }
+
     private void Update()
     {
+        TryOpenShop();
         onMoveArrow();
         if (saveData.isActive == false) { return; }
         saveData.time -= Time.deltaTime;
