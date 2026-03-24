@@ -27,7 +27,15 @@ public class CoreManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+
+        if (PlayerPrefs.GetInt("IsFirstGame") == 0)
+        {
+            PlayerPrefs.SetInt("IsFirstGame", 1);
+            PlayerPrefs.SetInt("SelectedCar", -1);
+        }
+
         UpdateMoney();
+
     }
 
     public void CloseShop()

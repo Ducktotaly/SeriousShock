@@ -7,34 +7,23 @@ using UnityEngine.Rendering;
 
 public class MapEntity : MonoBehaviour
 {
-    public List<GameObject> CARSPREFABS = new();
+    public ShopManager ShopManager;
     public Transform carSpawnPoint;
-    public List<Car> Cars = new();
     public Player player;
 
     private Car activeCar;
 
+
     private void Start()
     {
-        SpawnCar();
+        ShopManager.SpawnCar();
     }
-
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
             TryChangeCar();
         }
-    }
-
-    private void SpawnCar()
-    {
-        var carId = PlayerPrefs.GetInt("SelectedCar");
-        if (carId == 0) { return; }
-        var spawnedCar = Instantiate(CARSPREFABS[carId - 1]);
-        spawnedCar.transform.position = carSpawnPoint.position;
-        Cars.Add(spawnedCar.GetComponent<Car>());
-       
     }
 
     public Transform GetActivePlayer()
@@ -44,18 +33,16 @@ public class MapEntity : MonoBehaviour
 
     private void TryChangeCar()
     {
+        var selectedCar = ShopManager.GetSelectedCar();
         if (activeCar == null)
         {
-            foreach (Car car in Cars)
+            if (Vector3.Distance(player.transform.position, selectedCar.transform.position) < 3f)
             {
-                if (Vector3.Distance(player.transform.position, car.transform.position) < 3f)
-                {
-                    activeCar = car;
-                    player.CameraView.SetTarget(car.transform,true);
-                    player.gameObject.SetActive(false);
-                    car.SetActive(true);
+                activeCar = selectedCar;
+                player.CameraView.SetTarget(selectedCar.transform,true);
+                player.gameObject.SetActive(false);
+                selectedCar.SetActiveCar(true);
 
-                }
             }
         }
         else
@@ -66,7 +53,7 @@ public class MapEntity : MonoBehaviour
             player.CameraView.SetTarget(player.transform, true);
             player.gameObject.SetActive(true);
 
-            activeCar.SetActive(false);
+            activeCar.SetActiveCar(false);
             activeCar = null;
         }
     }

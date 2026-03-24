@@ -55,7 +55,7 @@ public class Car : MonoBehaviour
         }
     }
 
-    public void SetActive(bool setValue)
+    public void SetActiveCar(bool setValue)
     {
         isActive = setValue;
         if (setValue == false)

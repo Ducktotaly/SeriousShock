@@ -18,8 +18,10 @@ public class ShopManager : MonoBehaviour
     public TextMeshProUGUI CostText;
     public Slider Speed;
     public List<CarData> Cars;
+    public List<Car> CARSPREFABS = new();
+    public Transform CarSpawnPoint;
 
-
+    private Car selectedCar;
     private int index;
 
     private void Start()
@@ -28,8 +30,11 @@ public class ShopManager : MonoBehaviour
         LeftArrow.onClick.AddListener(() => SwitchCar(false));
         BuyButton.onClick.AddListener(() => BuyCar());
         SelectButton.onClick.AddListener(() => SelectCar());
-        DeselectButton.onClick.AddListener(() =>  DeselectCar());
-        ExitButton.onClick.AddListener(() => CoreManager.Instance.CloseShop());
+        ExitButton.onClick.AddListener(() => 
+        { 
+            CoreManager.Instance.CloseShop();
+            SpawnCar();
+        });
     }
 
     private void BuyCar()
@@ -44,18 +49,31 @@ public class ShopManager : MonoBehaviour
         CoreManager.Instance.UpdateMoney();
     }
 
-    private void SelectCar()
+    public Car GetSelectedCar()
     {
-        PlayerPrefs.SetInt("SelectedCar", index+1);
-        SelectButton.gameObject.SetActive(false);
-        DeselectButton.gameObject.SetActive(true);
+        return selectedCar;
     }
 
-    private void DeselectCar()
+    public void SpawnCar()
     {
-        PlayerPrefs.SetInt("SelectedCar", 0);
-        SelectButton.gameObject.SetActive(true);
-        DeselectButton.gameObject.SetActive(false);
+        if (selectedCar != null) 
+        {
+            Destroy(selectedCar.gameObject);
+        }
+        var savedCar = PlayerPrefs.GetInt("SelectedCar");
+        if (savedCar == -1)
+        {
+            return;
+        }
+        selectedCar = Instantiate(CARSPREFABS[PlayerPrefs.GetInt("SelectedCar")]);
+        selectedCar.transform.position = CarSpawnPoint.position;
+    }
+
+    private void SelectCar()
+    {
+        PlayerPrefs.SetInt("SelectedCar", index);
+        SelectButton.gameObject.SetActive(false);
+        DeselectButton.gameObject.SetActive(true);
     }
     public void UpdateShop()
     {
@@ -77,18 +95,18 @@ public class ShopManager : MonoBehaviour
 
         foreach (var c in Cars)
         {
-            c.Car.SetActive(false);
+            c.Car.gameObject.SetActive(false);
         }
         var isBought = PlayerPrefs.GetInt($"Car{index}") == 0;
         BuyButton.gameObject.SetActive(isBought);
-        var isSelected = PlayerPrefs.GetInt("SelectedCar") == index+1; //Прибавляем 1 чтобы при первом запуске использовать 0 из Prefs
+        var isSelected = PlayerPrefs.GetInt("SelectedCar") == index;
         DeselectButton.gameObject.SetActive(!isBought & isSelected);
         SelectButton.gameObject.SetActive(!isBought & !isSelected);
 
         
 
         var car = Cars[index];
-        car.Car.SetActive(true);
+        car.Car.gameObject.SetActive(true);
         car.Car.transform.localEulerAngles = Vector3.zero;
         NameText.text = car.Name;
         CostText.text = $"{car.Cost}$";
