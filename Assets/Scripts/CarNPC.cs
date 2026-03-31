@@ -8,9 +8,11 @@ public class CarNPC : MonoBehaviour
     public float Speed;
     public float turnAngle = 30f;
     public Waypoint targetWaypoint;
+    public float respawnTime = 5f;
+    public Rigidbody rb;
+
 
     private float axisX;
-    private float axisY;
 
     private void Update()
     {
@@ -27,7 +29,27 @@ public class CarNPC : MonoBehaviour
             {
                 targetWaypoint = targetWaypoint.NextWaypoints[Random.Range(0, targetWaypoint.NextWaypoints.Count)];
             }
+        }
 
+        if (rb.velocity.magnitude < 0.3f)
+        {
+            respawnTime -= Time.deltaTime;
+            if (respawnTime <= 0)
+            {
+                var spawnPos = targetWaypoint.transform.position;
+                if (!Physics.CheckSphere(spawnPos, 2f, LayerMask.GetMask("Car")))
+                {
+                    transform.position = spawnPos + Vector3.up;
+                    respawnTime = 5f;
+                }
+                else
+                {
+                    respawnTime = 1.5f;
+                }
+                
+                
+                
+            }
         }
     }
 

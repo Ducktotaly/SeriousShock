@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 430403564869335584}
   - component: {fileID: 430403564868237536}
   - component: {fileID: 6797408481247879686}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Car Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,7 +116,7 @@ GameObject:
   - component: {fileID: 6507703967000118408}
   - component: {fileID: 5727311506891151662}
   - component: {fileID: 6114041782408719244}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wheel_RL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -199,7 +199,7 @@ GameObject:
   - component: {fileID: 830351411026020482}
   - component: {fileID: 4530389883383235930}
   - component: {fileID: 3938674286704263786}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wheel_RR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -282,7 +282,7 @@ GameObject:
   - component: {fileID: 7703523557827050975}
   - component: {fileID: 2954363362480965061}
   - component: {fileID: 8004130549110421227}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wheel_FR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -363,7 +363,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3553760603291760861}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Models
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -399,7 +399,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5361817882897683632}
   - component: {fileID: 5330105496431812153}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wheel_FL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -471,7 +471,7 @@ GameObject:
   - component: {fileID: 8617560074152405770}
   - component: {fileID: 2943923179141091290}
   - component: {fileID: 6965500576645932026}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: CarNPC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -535,7 +535,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e26ba2ca626c14d4ba30e4b1191b8024, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movePoints: []
   Wheels:
   - wheel: {fileID: 5330105496431812153}
     model: {fileID: 7038581543180792103}
@@ -550,8 +549,10 @@ MonoBehaviour:
     model: {fileID: 830351411026020482}
     isFirst: 0
   Speed: 15
-  testPoint: {fileID: 0}
   turnAngle: 30
+  targetWaypoint: {fileID: 0}
+  respawnTime: 4
+  rb: {fileID: 2943923179141091290}
 --- !u!1 &6723196479970042590
 GameObject:
   m_ObjectHideFlags: 0
@@ -562,7 +563,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3375380730999844453}
   - component: {fileID: 2103556405605570445}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wheel_RL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -632,7 +633,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3881081387523192327}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Colliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -669,7 +670,7 @@ GameObject:
   - component: {fileID: 7038581543180792103}
   - component: {fileID: 7827714144156901142}
   - component: {fileID: 1512661753803978280}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wheel_FL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -751,7 +752,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5179366508258855787}
   - component: {fileID: 6219747476998399099}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wheel_RR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -822,7 +823,7 @@ GameObject:
   m_Component:
   - component: {fileID: 514509678489779224}
   - component: {fileID: 7143633783211224454}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wheel_FR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
