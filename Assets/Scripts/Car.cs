@@ -33,6 +33,7 @@ public class Car : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
+        if (isActive == false) { return; }
         CoreManager.Instance.GetDamage(collision.transform.tag);
     }
 

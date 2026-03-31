@@ -553,6 +553,8 @@ MonoBehaviour:
   targetWaypoint: {fileID: 0}
   respawnTime: 4
   rb: {fileID: 2943923179141091290}
+  renderCar: {fileID: 430403564868237536}
+  cam: {fileID: 0}
 --- !u!1 &6723196479970042590
 GameObject:
   m_ObjectHideFlags: 0

@@ -30,7 +30,6 @@ public class NPC : MonoBehaviour
         {
             return;
         }
-        transform.tag = "DeathNPC";
         agent.enabled = false;
         rig.SetActive(true);
         animator.enabled = false;
@@ -40,9 +39,9 @@ public class NPC : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.tag == "Player" || other.transform.tag == "Car")
+        if ((other.transform.tag == "Player" || other.transform.tag == "Car") && !onDeath)
         {
-            CoreManager.Instance.GetDamage("NPC");
+            CoreManager.Instance.GetDamage("NPC", transform);
         }
 
         SetRagdoll();

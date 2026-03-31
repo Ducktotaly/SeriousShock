@@ -39,7 +39,7 @@ public class CoreManager : MonoBehaviour
 
     }
 
-    public void GetDamage(string tag)
+    public void GetDamage(string tag, Transform test = null)
     {
         if (tag == "DeathNPC") { return; }
         var damage = 0f;
@@ -58,6 +58,14 @@ public class CoreManager : MonoBehaviour
         }
         health -= damage;
         Debug.Log($"Damage: {damage}, HP: {health}, Tag: {tag}");
+        if (test != null)
+        {
+            Debug.Log(test.name);
+        }
+        else
+        {
+            Debug.Log("Íó ÿ õç");
+        }
     }
 
     public void CloseShop()

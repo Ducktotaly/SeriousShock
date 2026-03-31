@@ -10,6 +10,8 @@ public class CarNPC : MonoBehaviour
     public Waypoint targetWaypoint;
     public float respawnTime = 5f;
     public Rigidbody rb;
+    public Renderer renderCar;
+    public Camera cam;
 
 
     private float axisX;
@@ -39,6 +41,11 @@ public class CarNPC : MonoBehaviour
                 var spawnPos = targetWaypoint.transform.position;
                 if (!Physics.CheckSphere(spawnPos, 2f, LayerMask.GetMask("Car")))
                 {
+                    if (IsPlayerSee())
+                    {
+                        respawnTime = 2.5f;
+                        return;
+                    }
                     transform.position = spawnPos + Vector3.up;
                     respawnTime = 5f;
                 }
@@ -46,11 +53,20 @@ public class CarNPC : MonoBehaviour
                 {
                     respawnTime = 1.5f;
                 }
-                
-                
-                
+
+
+
             }
         }
+    }
+
+    private bool IsPlayerSee()
+    {
+        Plane[] planes = GeometryUtility.CalculateFrustumPlanes(cam);
+        var viewPos = cam.WorldToViewportPoint(targetWaypoint.transform.position);
+        var isPointVisible = viewPos.z > 0 && viewPos.x >= 0 && viewPos.x <= 1 && viewPos.y >= 0 && viewPos.y <= 1;
+        var isNPCVisible = GeometryUtility.TestPlanesAABB(planes, renderCar.bounds);
+        return isPointVisible || isNPCVisible;
     }
 
     private void onSteerTurn(WheelCollider wheel, bool isFirst)
