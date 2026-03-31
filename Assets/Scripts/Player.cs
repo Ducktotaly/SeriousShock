@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public GameObject rig;
     public Animator Animator;
     public CharacterController Controller;
 
     public float Speed;
     public CameraView CameraView;
 
-    private float defaultAnimSpeed = 1f;
+    private bool onDeath;
 
     private void Awake()
     {
@@ -20,6 +21,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+       if (onDeath) {return;}
         var x = Input.GetAxis("Horizontal");
         var y = Input.GetAxis("Vertical");
         var motion = new Vector3(x, 0, y);
@@ -35,6 +37,27 @@ public class Player : MonoBehaviour
         setAnim(true);
         
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        CoreManager.Instance.GetDamage(collision.transform.tag);
+    }
+    private void SetRagdoll()
+    {
+        if (onDeath)
+        {
+            return;
+        }
+        rig.SetActive(true);
+        Animator.enabled = false;
+    }
+
+    private void OnPlayerDeath()
+    {
+        SetRagdoll();
+        onDeath = true;
+    }
+
     private void setAnim(bool IsIdle)
     {
         Animator.SetBool("isIdle", IsIdle);

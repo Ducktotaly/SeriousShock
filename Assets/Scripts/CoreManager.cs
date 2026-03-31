@@ -23,6 +23,7 @@ public class CoreManager : MonoBehaviour
 
     private MissionDate saveData;
     private bool activeShop;
+    private float health = 100;
 
     private void Awake()
     {
@@ -36,6 +37,27 @@ public class CoreManager : MonoBehaviour
 
         UpdateMoney();
 
+    }
+
+    public void GetDamage(string tag)
+    {
+        if (tag == "DeathNPC") { return; }
+        var damage = 0f;
+        if (tag == "NPC")
+        {
+            damage = 20f;
+        }
+        if (tag == "CarNPC")
+        {
+            damage = 100f;
+        }
+        
+        if (mapEntity.GetActivePlayer() != mapEntity.player.transform)
+        {
+            damage /= 5f; // CarData Defence
+        }
+        health -= damage;
+        Debug.Log($"Damage: {damage}, HP: {health}, Tag: {tag}");
     }
 
     public void CloseShop()

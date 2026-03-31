@@ -31,6 +31,10 @@ public class Car : MonoBehaviour
         axisX = Input.GetAxis("Horizontal");
         axisY = Input.GetAxis("Vertical");
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        CoreManager.Instance.GetDamage(collision.transform.tag);
+    }
 
     private void FixedUpdate()
     {

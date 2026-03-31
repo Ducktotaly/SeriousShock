@@ -240,7 +240,7 @@ GameObject:
   - component: {fileID: 7250070738629189659}
   m_Layer: 0
   m_Name: Upper_Arm_L
-  m_TagString: Untagged
+  m_TagString: DeathNPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -371,7 +371,7 @@ GameObject:
   - component: {fileID: 727002965249547965}
   m_Layer: 0
   m_Name: Thigh_L
-  m_TagString: Untagged
+  m_TagString: DeathNPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -565,7 +565,7 @@ GameObject:
   - component: {fileID: 6765667269459588175}
   m_Layer: 0
   m_Name: Spine_2
-  m_TagString: Untagged
+  m_TagString: DeathNPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -694,7 +694,7 @@ GameObject:
   - component: {fileID: 3511965755536670199}
   m_Layer: 0
   m_Name: Head
-  m_TagString: Untagged
+  m_TagString: DeathNPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -972,7 +972,7 @@ GameObject:
   - component: {fileID: 4727589943072298042}
   m_Layer: 0
   m_Name: Thigh_R
-  m_TagString: Untagged
+  m_TagString: DeathNPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1165,7 +1165,7 @@ GameObject:
   - component: {fileID: 194372166013984945}
   m_Layer: 0
   m_Name: Spine
-  m_TagString: Untagged
+  m_TagString: DeathNPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1464,7 +1464,7 @@ GameObject:
   - component: {fileID: 5171742274964310450}
   m_Layer: 0
   m_Name: Shin_L
-  m_TagString: Untagged
+  m_TagString: DeathNPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1690,7 +1690,7 @@ GameObject:
   - component: {fileID: 284879029923444535}
   m_Layer: 0
   m_Name: Shin_R
-  m_TagString: Untagged
+  m_TagString: DeathNPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1821,7 +1821,7 @@ GameObject:
   - component: {fileID: 4367715106690807137}
   m_Layer: 0
   m_Name: Forearm_L
-  m_TagString: Untagged
+  m_TagString: DeathNPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2059,7 +2059,7 @@ GameObject:
   - component: {fileID: 4438099783799535939}
   m_Layer: 0
   m_Name: Upper_Arm_R
-  m_TagString: Untagged
+  m_TagString: DeathNPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2190,7 +2190,7 @@ GameObject:
   - component: {fileID: 5886728621558201777}
   m_Layer: 0
   m_Name: Forearm_R
-  m_TagString: Untagged
+  m_TagString: DeathNPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

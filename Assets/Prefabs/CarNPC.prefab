@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6797408481247879686}
   m_Layer: 3
   m_Name: Car Body
-  m_TagString: Untagged
+  m_TagString: CarNPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -473,7 +473,7 @@ GameObject:
   - component: {fileID: 6965500576645932026}
   m_Layer: 3
   m_Name: CarNPC
-  m_TagString: Untagged
+  m_TagString: CarNPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
