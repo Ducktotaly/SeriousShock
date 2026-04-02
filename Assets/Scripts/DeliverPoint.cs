@@ -34,6 +34,6 @@ public class DeliverPoint : MonoBehaviour
 
     private void OnGive() 
     {
-        CoreManager.Instance.GetOrder();
+        CoreManager.Instance.GiveOrder();
     }
 }

@@ -50,9 +50,10 @@ public class Player : MonoBehaviour
         }
         rig.SetActive(true);
         Animator.enabled = false;
+        CoreManager.Instance.DeathAnim();
     }
 
-    private void OnPlayerDeath()
+    public void OnPlayerDeath()
     {
         SetRagdoll();
         onDeath = true;

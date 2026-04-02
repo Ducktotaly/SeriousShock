@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CameraView : MonoBehaviour
@@ -9,6 +10,15 @@ public class CameraView : MonoBehaviour
     public Transform Target;
     private Vector3 offset;
     private bool isFixed;
+    public Material fadeMat;
+
+    private List<Build> buildings = new();
+
+    public class Build
+    {
+        public Transform building;
+        public Material originalMat;
+    }
 
     public void SetOffset(Vector3 pos)
     {
@@ -32,4 +42,42 @@ public class CameraView : MonoBehaviour
         if (isFixed == true) { return; }
         transform.position = Vector3.Lerp(transform.position, Target.position + offset, Time.deltaTime * CameraSpeed);
     }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.transform.TryGetComponent<MeshRenderer>(out var mesh))
+        {
+            foreach (var build in buildings) 
+            {
+                if (other.transform == build.building)
+                {
+                    return;
+                }
+            }
+            var buildData = new Build();
+            buildData.building = other.transform;
+            buildData.originalMat = mesh.material;
+            buildings.Add(buildData);
+            mesh.material = fadeMat;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.transform.TryGetComponent<MeshRenderer>(out var mesh))
+        {
+            foreach (var build in buildings)
+            {
+                if (other.transform != build.building)
+                {
+                    continue;
+                }
+                mesh.material = build.originalMat;
+                buildings.Remove(build);
+                
+            }
+        }
+    }
 }
+    

@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class CoreManager : MonoBehaviour
 {
@@ -20,10 +22,13 @@ public class CoreManager : MonoBehaviour
     public TextMeshProUGUI timeText;
     public Transform arrow;
     public MapEntity mapEntity;
+    public Slider hpSlider;
 
     private MissionDate saveData;
     private bool activeShop;
     private float health = 100;
+
+
 
     private void Awake()
     {
@@ -39,8 +44,17 @@ public class CoreManager : MonoBehaviour
 
     }
 
+    private void Start()
+    {
+        DOTween.Sequence()
+            .AppendCallback(() => DOTween.To(x => blackScreen.alpha = x, 1, 0, 1f))
+            .AppendInterval(1f);
+    }
+
     public void GetDamage(string tag, Transform test = null)
     {
+        if (saveData.isActive == false) { return; }
+
         if (tag == "DeathNPC") { return; }
         var damage = 0f;
         if (tag == "NPC")
@@ -57,15 +71,29 @@ public class CoreManager : MonoBehaviour
             damage /= 5f; // CarData Defence
         }
         health -= damage;
-        Debug.Log($"Damage: {damage}, HP: {health}, Tag: {tag}");
-        if (test != null)
+
+        if (health <= 0)
         {
-            Debug.Log(test.name);
+            health = 0;
+            mapEntity.player.OnPlayerDeath();
         }
-        else
-        {
-            Debug.Log("Ну я хз");
-        }
+
+
+        hpSlider.value = health/100;
+    }
+
+    public void DeathAnim()
+    {
+        DOTween.Sequence()
+            .AppendInterval(4f)
+            .AppendCallback(() => DOTween.To(x => blackScreen.alpha = x, 0, 1, 2f))
+            .AppendInterval(2f)
+            
+            
+            //Добавить чего нибудь после смерти типо
+
+
+            .AppendCallback(() => SceneManager.LoadScene("Main"));
     }
 
     public void CloseShop()
@@ -93,16 +121,30 @@ public class CoreManager : MonoBehaviour
         GetMission(UnityEngine.Random.Range(50, 300), UnityEngine.Random.Range(5,30));
     }
 
+    private void FailedOrder()
+    {
+        health = 100;
+        hpSlider.gameObject.SetActive(false);
+
+        saveData.isActive = false;
+        saveData.point.gameObject.SetActive(false);
+        timeText.text = "";
+        startPoint.ActivePoint();
+    }
+
     public void GetMission(int value, float time)
     {
+        hpSlider.gameObject.SetActive(true);
         saveData.money = value;
         saveData.time = time;
         saveData.isActive = true;
         saveData.point = pointGive[UnityEngine.Random.Range(0, pointGive.Count)];
         saveData.point.ActivePoint();
     }
-    public void GetOrder()
+    public void GiveOrder()
     {
+        health = 100;
+        hpSlider.gameObject.SetActive(false);
         saveData.isActive = false;
         timeText.text = "";
         startPoint.ActivePoint();
@@ -149,10 +191,7 @@ public class CoreManager : MonoBehaviour
         timeText.text = string.Format("{0:D2}:{1:D2}", time.Minutes, time.Seconds);
         if (saveData.time <= 0)
         {
-            saveData.isActive = false;
-            saveData.point.gameObject.SetActive(false);
-            timeText.text = "";
-            startPoint.ActivePoint();
+            FailedOrder();
         }
     }
 
