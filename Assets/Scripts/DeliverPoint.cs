@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class DeliverPoint : MonoBehaviour
@@ -15,7 +12,6 @@ public class DeliverPoint : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            gameObject.SetActive(false);
             if (IsGet)
             {
                 OnGet();
@@ -25,6 +21,22 @@ public class DeliverPoint : MonoBehaviour
                 OnGive();
             }
         }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            if (IsGet) 
+            {
+                CloseMenu();
+            }
+        }
+    }
+
+    private void CloseMenu()
+    {
+        CoreManager.Instance.CloseMissionMenu();
     }
 
     private void OnGet()

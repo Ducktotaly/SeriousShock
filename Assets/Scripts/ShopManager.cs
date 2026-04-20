@@ -11,7 +11,6 @@ public class ShopManager : MonoBehaviour
     public Button BuyButton;
     public Button ExitButton;
     public Button SelectButton;
-    public Button DeselectButton;
     public Button LeftArrow;
     public Button RightArrow;
     public TextMeshProUGUI NameText;
@@ -73,7 +72,6 @@ public class ShopManager : MonoBehaviour
     {
         PlayerPrefs.SetInt("SelectedCar", index);
         SelectButton.gameObject.SetActive(false);
-        DeselectButton.gameObject.SetActive(true);
     }
     public void UpdateShop()
     {
@@ -100,7 +98,6 @@ public class ShopManager : MonoBehaviour
         var isBought = PlayerPrefs.GetInt($"Car{index}") == 0;
         BuyButton.gameObject.SetActive(isBought);
         var isSelected = PlayerPrefs.GetInt("SelectedCar") == index;
-        DeselectButton.gameObject.SetActive(!isBought & isSelected);
         SelectButton.gameObject.SetActive(!isBought & !isSelected);
 
         

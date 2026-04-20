@@ -38,6 +38,11 @@ public class Player : MonoBehaviour
         
     }
 
+    public float GetPlayerSpeed()
+    {
+        return Speed;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         CoreManager.Instance.GetDamage(collision.transform.tag);

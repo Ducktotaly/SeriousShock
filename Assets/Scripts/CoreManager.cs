@@ -15,7 +15,6 @@ public class CoreManager : MonoBehaviour
     public CanvasGroup blackScreen;
     public Transform shopPoint;
     public ShopManager shopManager;
-    public List<DeliverPoint> pointGive;
     public DeliverPoint startPoint;
     public static CoreManager Instance;
     public TextMeshProUGUI moneyText;
@@ -23,8 +22,9 @@ public class CoreManager : MonoBehaviour
     public Transform arrow;
     public MapEntity mapEntity;
     public Slider hpSlider;
+    public MissionMenuManager mmManager;
 
-    private MissionDate saveData;
+    private MissionData saveData = new();
     private bool activeShop;
     private float health = 100;
 
@@ -46,9 +46,10 @@ public class CoreManager : MonoBehaviour
 
     private void Start()
     {
+        mmManager.GenerateMissions();
         DOTween.Sequence()
-            .AppendCallback(() => DOTween.To(x => blackScreen.alpha = x, 1, 0, 1f))
-            .AppendInterval(1f);
+            .AppendCallback(() => DOTween.To(x => blackScreen.alpha = x, 1, 0, 2f))
+            .AppendInterval(2f);
     }
 
     public void GetDamage(string tag, Transform test = null)
@@ -65,7 +66,7 @@ public class CoreManager : MonoBehaviour
         {
             damage = 100f;
         }
-        
+
         if (mapEntity.GetActivePlayer() != mapEntity.player.transform)
         {
             damage /= 5f; // CarData Defence
@@ -79,7 +80,7 @@ public class CoreManager : MonoBehaviour
         }
 
 
-        hpSlider.value = health/100;
+        hpSlider.value = health / 100;
     }
 
     public void DeathAnim()
@@ -88,12 +89,12 @@ public class CoreManager : MonoBehaviour
             .AppendInterval(4f)
             .AppendCallback(() => DOTween.To(x => blackScreen.alpha = x, 0, 1, 2f))
             .AppendInterval(2f)
-            
-            
+
+
             //ƒобавить чего нибудь после смерти типо
 
 
-            .AppendCallback(() => SceneManager.LoadScene("Main"));
+            .AppendCallback(() => SceneManager.LoadScene(0));
     }
 
     public void CloseShop()
@@ -110,15 +111,20 @@ public class CoreManager : MonoBehaviour
                 .AppendInterval(1f)
                 .AppendCallback(() => activeShop = false);
     }
-  
+
     public void UpdateMoney()
     {
         moneyText.text = $"{PlayerPrefs.GetInt("Money")} $";
     }
 
+    public void CloseMissionMenu()
+    {
+        mmManager.CloseMenu();
+    }
+
     public void OpenMissionMenu()
     {
-        GetMission(UnityEngine.Random.Range(50, 300), UnityEngine.Random.Range(5,30));
+        mmManager.OpenMenu();
     }
 
     private void FailedOrder()
@@ -132,24 +138,23 @@ public class CoreManager : MonoBehaviour
         startPoint.ActivePoint();
     }
 
-    public void GetMission(int value, float time)
+    public void SetMission(MissionData data)
     {
         hpSlider.gameObject.SetActive(true);
-        saveData.money = value;
-        saveData.time = time;
-        saveData.isActive = true;
-        saveData.point = pointGive[UnityEngine.Random.Range(0, pointGive.Count)];
+        saveData = data;
+        startPoint.gameObject.SetActive(false);
         saveData.point.ActivePoint();
     }
     public void GiveOrder()
     {
         health = 100;
         hpSlider.gameObject.SetActive(false);
+        saveData.point.gameObject.SetActive(false);
         saveData.isActive = false;
         timeText.text = "";
         startPoint.ActivePoint();
         var currentMoney = PlayerPrefs.GetInt("Money") + saveData.money;
-        PlayerPrefs.SetInt("Money",currentMoney);
+        PlayerPrefs.SetInt("Money", currentMoney);
         moneyText.text = $"{currentMoney} $";
     }
 
@@ -202,13 +207,5 @@ public class CoreManager : MonoBehaviour
 
         var direction = target.position - player.position;
         arrow.rotation = Quaternion.LookRotation(direction);
-    }
-
-    public struct MissionDate
-    {
-        public int money;
-        public float time;
-        public bool isActive;
-        public DeliverPoint point;
     }
 }

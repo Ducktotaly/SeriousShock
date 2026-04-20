@@ -8,7 +8,6 @@ using UnityEngine.Rendering;
 public class MapEntity : MonoBehaviour
 {
     public ShopManager ShopManager;
-    public Transform carSpawnPoint;
     public Player player;
 
     private Car activeCar;
