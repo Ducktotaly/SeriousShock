@@ -8,6 +8,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using YG;
 
 public class CoreManager : MonoBehaviour
 {
@@ -23,6 +24,8 @@ public class CoreManager : MonoBehaviour
     public MapEntity mapEntity;
     public Slider hpSlider;
     public MissionMenuManager mmManager;
+    public GameObject winScreen;
+    public GameObject winAdButton;
 
     private MissionData saveData = new();
     private bool activeShop;
@@ -94,7 +97,10 @@ public class CoreManager : MonoBehaviour
             //ƒобавить чего нибудь после смерти типо
 
 
-            .AppendCallback(() => SceneManager.LoadScene(0));
+            .AppendCallback(() => {
+                YG2.InterstitialAdvShow();
+                SceneManager.LoadScene(0);
+            });
     }
 
     public void CloseShop()
@@ -106,6 +112,7 @@ public class CoreManager : MonoBehaviour
                 {
                     mainCamera.SetActive(true);
                     shopManager.gameObject.SetActive(false);
+                    YG2.InterstitialAdvShow();
                 })
                 .AppendCallback(() => DOTween.To(x => blackScreen.alpha = x, 1, 0, 1f))
                 .AppendInterval(1f)
@@ -156,6 +163,20 @@ public class CoreManager : MonoBehaviour
         var currentMoney = PlayerPrefs.GetInt("Money") + saveData.money;
         PlayerPrefs.SetInt("Money", currentMoney);
         moneyText.text = $"{currentMoney} $";
+        winScreen.SetActive(true);
+        winAdButton.SetActive(true);
+    }
+
+    public void SetReward()
+    {
+            YG2.RewardedAdvShow("Double", () =>
+            {
+                var currentMoney = PlayerPrefs.GetInt("Money") + saveData.money;
+                PlayerPrefs.SetInt("Money", currentMoney);
+                moneyText.text = $"{currentMoney} $";
+                // update money on win screen
+                winAdButton.SetActive(false);
+            });
     }
 
     private void TryOpenShop()

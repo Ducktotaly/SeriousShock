@@ -48,9 +48,9 @@ public class CameraView : MonoBehaviour
     {
         if (other.transform.TryGetComponent<MeshRenderer>(out var mesh))
         {
-            foreach (var build in buildings) 
+            for (var i = buildings.Count-1; i >= 0; i--)
             {
-                if (other.transform == build.building)
+                if (other.transform == buildings[i].building)
                 {
                     return;
                 }
@@ -67,8 +67,9 @@ public class CameraView : MonoBehaviour
     {
         if (other.transform.TryGetComponent<MeshRenderer>(out var mesh))
         {
-            foreach (var build in buildings)
+            for (var i = buildings.Count-1; i >= 0; i--) 
             {
+                var build = buildings[i];
                 if (other.transform != build.building)
                 {
                     continue;
