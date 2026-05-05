@@ -16,6 +16,12 @@ public class ShopManager : MonoBehaviour
     public TextMeshProUGUI NameText;
     public TextMeshProUGUI CostText;
     public Slider Speed;
+    public TextMeshProUGUI SpeedText;
+    public Slider Movement;
+    public TextMeshProUGUI MovementText;
+    public Slider Protection;
+    public TextMeshProUGUI ProtectionText;
+
     public List<CarData> Cars;
     public List<Car> CARSPREFABS = new();
     public Transform CarSpawnPoint;
@@ -107,7 +113,16 @@ public class ShopManager : MonoBehaviour
         car.Car.transform.localEulerAngles = Vector3.zero;
         NameText.text = car.Name;
         CostText.text = $"{car.Cost}$";
+
         Speed.value = car.Speed;
+        SpeedText.text = $"{car.Speed * 100}";
+
+        Movement.value = car.Movement;
+        MovementText.text = $"{car.Movement * 100}";
+
+        Protection.value = car.Protection;
+        ProtectionText.text = $"{car.Protection * 100}";
+
     }
 
     private void Update()
@@ -123,4 +138,6 @@ public class CarData
     public GameObject Car;
     public int Cost;
     public float Speed;
+    public float Movement;
+    public float Protection;
 }
