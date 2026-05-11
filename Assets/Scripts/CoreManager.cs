@@ -26,6 +26,7 @@ public class CoreManager : MonoBehaviour
     public MissionMenuManager mmManager;
     public GameObject winScreen;
     public GameObject winAdButton;
+    public TextMeshProUGUI winEarnTxt;
 
     private MissionData saveData = new();
     private bool activeShop;
@@ -163,6 +164,7 @@ public class CoreManager : MonoBehaviour
         var currentMoney = PlayerPrefs.GetInt("Money") + saveData.money;
         PlayerPrefs.SetInt("Money", currentMoney);
         moneyText.text = $"{currentMoney} $";
+        winEarnTxt.text = $"{saveData.money}$";
         winScreen.SetActive(true);
         winAdButton.SetActive(true);
     }
@@ -174,7 +176,7 @@ public class CoreManager : MonoBehaviour
                 var currentMoney = PlayerPrefs.GetInt("Money") + saveData.money;
                 PlayerPrefs.SetInt("Money", currentMoney);
                 moneyText.text = $"{currentMoney} $";
-                // update money on win screen
+                winEarnTxt.text = $"{saveData.money*2}$";
                 winAdButton.SetActive(false);
             });
     }
