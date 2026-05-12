@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Car : MonoBehaviour
 {
+    public AudioSource engineSound;
     public List<WheelData> Wheels = new();
     public CarCollider Spawn;
     public float Speed;
@@ -30,6 +31,9 @@ public class Car : MonoBehaviour
         if (isActive == false) { return;}
         axisX = Input.GetAxis("Horizontal");
         axisY = Input.GetAxis("Vertical");
+
+        engineSound.volume += (axisY != 0) ? Time.deltaTime : -Time.deltaTime ;
+
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -62,15 +66,18 @@ public class Car : MonoBehaviour
 
     public void SetActiveCar(bool setValue)
     {
+        engineSound.volume = 0;
         isActive = setValue;
         if (setValue == false)
         {
+            engineSound.Stop();
             foreach (var wheel in Wheels)
             {
                 wheel.wheel.motorTorque = 0;
                 onBreak(wheel.wheel,brakeSpeed);
             }
         }
+        else { engineSound.Play(); }
     }
 
     private void onBreak(WheelCollider wheel,float speed)

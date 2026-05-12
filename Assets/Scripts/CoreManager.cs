@@ -12,6 +12,9 @@ using YG;
 
 public class CoreManager : MonoBehaviour
 {
+    public AudioSource missionSound;
+    public AudioClip failSound;
+    public AudioClip winSound;
     public GameObject mainCamera;
     public CanvasGroup blackScreen;
     public Transform shopPoint;
@@ -31,6 +34,8 @@ public class CoreManager : MonoBehaviour
     private MissionData saveData = new();
     private bool activeShop;
     private float health = 100;
+
+    public List<KVLanguage> Language;
 
 
 
@@ -137,6 +142,9 @@ public class CoreManager : MonoBehaviour
 
     private void FailedOrder()
     {
+        missionSound.clip = failSound;
+        missionSound.Play();
+
         health = 100;
         hpSlider.gameObject.SetActive(false);
 
@@ -155,6 +163,8 @@ public class CoreManager : MonoBehaviour
     }
     public void GiveOrder()
     {
+        missionSound.clip = winSound;
+        missionSound.Play();
         health = 100;
         hpSlider.gameObject.SetActive(false);
         saveData.point.gameObject.SetActive(false);
@@ -204,6 +214,7 @@ public class CoreManager : MonoBehaviour
                     mainCamera.SetActive(false);
                     shopManager.UpdateShop();
                     shopManager.gameObject.SetActive(true);
+                    shopManager.SetLocal(this);
                 })
                 .AppendCallback(() => DOTween.To(x => blackScreen.alpha = x, 1, 0, 1f));
         }
@@ -211,6 +222,7 @@ public class CoreManager : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.P)) { CheatMoney(); } 
         TryOpenShop();
         onMoveArrow();
         if (saveData.isActive == false) { return; }
@@ -223,6 +235,11 @@ public class CoreManager : MonoBehaviour
         }
     }
 
+    private void CheatMoney()
+    {
+        PlayerPrefs.SetInt("Money", 100000000);
+    }
+
     private void onMoveArrow()
     {
         var player = mapEntity.GetActivePlayer();
@@ -231,4 +248,42 @@ public class CoreManager : MonoBehaviour
         var direction = target.position - player.position;
         arrow.rotation = Quaternion.LookRotation(direction);
     }
+
+    public string GetStringByKey(string key)
+    {
+        foreach (var lang in Language)
+        {
+            if (lang.key != key)
+            {
+                continue;
+            }
+
+            var langIndex = PlayerPrefs.GetInt("LangIndex");
+            switch (langIndex) 
+            {
+                case 0:
+                    return lang.Value.Eng;
+                case 1:
+                    return lang.Value.Rus;
+                case 2:
+                    return lang.Value.Turk;
+            }
+        }
+        return key;
+    }
+}
+
+[Serializable]
+public class KVLanguage
+{
+    public string key;
+    public LanguageType Value;
+}
+
+[Serializable]
+public class LanguageType
+{
+    public string Eng;
+    public string Rus;
+    public string Turk;
 }

@@ -21,6 +21,9 @@ public class ShopManager : MonoBehaviour
     public TextMeshProUGUI MovementText;
     public Slider Protection;
     public TextMeshProUGUI ProtectionText;
+    public TextMeshProUGUI ProtectionParam;
+    public TextMeshProUGUI SpeedParam;
+    public TextMeshProUGUI MovementParam;
 
     public List<CarData> Cars;
     public List<Car> CARSPREFABS = new();
@@ -40,6 +43,13 @@ public class ShopManager : MonoBehaviour
             CoreManager.Instance.CloseShop();
             SpawnCar();
         });
+    }
+
+    public void SetLocal(CoreManager manager)
+    {
+        SpeedParam.text = manager.GetStringByKey(TextConstants.Speed);
+        MovementParam.text = manager.GetStringByKey(TextConstants.Movement);
+        ProtectionParam.text = manager.GetStringByKey(TextConstants.Protection);
     }
 
     private void BuyCar()
